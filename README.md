@@ -1,82 +1,88 @@
-class Student:
-    def __init__(self, name):
-        self.name = name
-        self.scores = []
+# Student Performance Tracker
 
-    def add_scores(self, scores):
-        """Add scores for the student."""
-        self.scores = scores
+This Python program tracks performance of students, calculates their average scores and also determines whether they are passing in all the subjects or failing.
+It also calculates the overall class average and generates a performance report for it.
 
-    def calculate_average(self):
-        """Calculate the average score for the student."""
-        if self.scores:
-            return sum(self.scores) / len(self.scores)
-        return 0
+## Features
 
-    def is_passing(self, passing_score=40):
-        """Determine if the student is passing in all subjects."""
-        return all(score >= passing_score for score in self.scores)
+* ### Student information input
+    Allows you to input students' names and scores in multiple subjects (Maths, English, Science etc etc.)
 
+* ### Individual Student report
+    Displays each student's average score and whether they are passing or failing.
 
-class PerformanceTracker:
-    def __init__(self):
-        self.students = {}
+* ### Class performance Report
+    Computes overall average score of the class and displays individual student performance.
 
-    def add_student(self, name, scores):
-        """Add a new student with their scores to the tracker."""
-        student = Student(name)
-        student.add_scores(scores)
-        self.students[name] = student
+* ### Score Validation
+    Handles invalid scores inputs (non-integer values) and prompts the users to re-enter them.
 
-    def calculate_class_average(self):
-        """Calculate the overall average score for the entire class."""
-        total_score = 0
-        total_subjects = 0
-        for student in self.students.values():
-            total_score += sum(student.scores)
-            total_subjects += len(student.scores)
-        if total_subjects > 0:
-            return total_score / total_subjects
-        return 0
+## Classes
 
-    def display_student_performance(self):
-        """Print out the performance of each student and the class average."""
-        print("\n--- Student Performance Report ---")
-        for student in self.students.values():
-            avg_score = student.calculate_average()
-            status = "Passing" if student.is_passing() else "Failing"
-            print(f"{student.name}: Average Score = {avg_score:.2f}, Status = {status}")
-        
-        class_avg = self.calculate_class_average()
-        print(f"\nClass Average Score: {class_avg:.2f}")
-        print("--- End of Report ---\n")
+*Student*
 
+Represents a single student with their name and scores
 
-# Step 3: Input Handling
-def input_student_data(tracker):
-    print("Enter student details (type 'done' when finished):")
-    while True:
-        name = input("Enter student's name: ").strip()
-        if name.lower() == 'done':
-            break
+* ### Methods
+    * `__init__(self, name)`: It initializes a new student with the given name and an empty score list.
 
-        try:
-            scores = []
-            for subject in ["Math", "Science", "English"]:
-                score = int(input(f"Enter {subject} score for {name}: "))
-                scores.append(score)
+    * `add_scores(self, scores)`: Adds a list of scores to the student's record.
 
-            # Step 3: Store Data
-            tracker.add_student(name, scores)
+    *  `calculate_average(self)`: Calculates and returns the average score for the student.
 
-        except ValueError:
-            print("Invalid input. Please enter a valid integer score.")
-            continue
+    * `is_passing(self, passing_score=50)`: Checks if the student is passing in all subjects (default passing score is 50)
 
+*PerformanceTracker*
 
-# Initialize the performance tracker and gather input
-tracker = PerformanceTracker()
-input_student_data(tracker)
+Tracks a collection of students and calculates class level performance metrics.
 
-# Display student performance and class average
-tracker.display_student_performance()
+* ### Methods
+   
+    * `__init__(self)`: Initializes an empty dictionary to store students.
+
+    * `add_student(self, name, scores)`: Adds a student along with their scores to the tracker.
+
+    * `calculate_class_average(self)`: Calculates the average score for the class.
+
+    * `display_student_performance of each student and the class average.`
+
+## Functionality
+
+* ### Input Handling 
+    The program will prompt for students' names and scores, you can type as many student data until you type `done`
+
+* ### Report Generation
+    After input, the program generates and prints a detailed report on individual students' average scores and passing status, along with overall class average score.
+
+## How to use?
+
+1- Clone or download this repository.
+
+2- Run the script using a Python 3.x interpreter.
+
+3- Input students' names and scores when prompted. Type `done` to stop input.
+
+4- View the report displaying student performance and class average.
+
+## Example Output
+
+```
+Enter student details (type 'done' when finished):
+Enter student's name: Maryam
+Enter Math score for Maryam: 67
+Enter Science score for Maryam: 45
+Enter English score for Maryam: 78
+Enter student's name: john
+Enter Math score for john: 43
+Enter Science score for john: 89
+Enter English score for john: 34
+Enter student's name: done
+
+--- Student Performance Report ---
+Maryam: Average Score = 63.33, Status = Passing
+john: Average Score = 55.33, Status = Failing
+
+Class Average Score: 59.33
+--- End of Report ---
+
+    
